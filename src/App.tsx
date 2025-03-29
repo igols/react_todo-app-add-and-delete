@@ -53,7 +53,7 @@ export const App: React.FC = () => {
     }
 
     try {
-      setLoading(false);
+      setLoading(true);
       const createdTodo = await addTodos(newTodo);
 
       setTodos([...todos, createdTodo]);
@@ -126,9 +126,11 @@ export const App: React.FC = () => {
       </div>
       {loading && <Loader />}
 
-      {(errorMessege === null || todos.length === 0) && (
-        <Error errorMessege={errorMessege} setError={setErrorMessege} />
-      )}
+      <Error
+        errorMessege={errorMessege}
+        setError={setErrorMessege}
+        todos={todos}
+      />
     </div>
   );
 };
