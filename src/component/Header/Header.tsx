@@ -28,7 +28,7 @@ export const Header: React.FC<Props> = ({
         data-cy="ToggleAllButton"
         onClick={() => loadTodos}
       />
-      {/* Add a todo on form submit */}
+      {/* +Add a todo on form submit */}
       <form onSubmit={handleAddTodo}>
         <input
           autoFocus
