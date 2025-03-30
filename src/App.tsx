@@ -35,16 +35,6 @@ export const App: React.FC = () => {
     loadTodos();
   }, []);
 
-  useEffect(() => {
-    if (errorMessege === null) {
-      return;
-    }
-
-    const timer = setTimeout(() => setErrorMessege(null), 3000);
-
-    return () => clearTimeout(timer);
-  }, [errorMessege]);
-
   async function handleAddTodo(event: React.FormEvent) {
     event.preventDefault();
     if (!newTodo.trim()) {

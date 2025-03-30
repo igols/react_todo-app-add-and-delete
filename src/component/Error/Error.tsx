@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cn from 'classnames';
 import { Todo } from '../../types/Todo';
 type Props = {
@@ -8,6 +8,16 @@ type Props = {
 };
 
 export const Error: React.FC<Props> = ({ errorMessege, setError, todos }) => {
+  useEffect(() => {
+    if (errorMessege === null) {
+      return;
+    }
+
+    const timer = setTimeout(() => setError(null), 3000);
+
+    return () => clearTimeout(timer);
+  }, [errorMessege, setError]);
+
   return (
     <div
       data-cy="ErrorNotification"
