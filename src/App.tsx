@@ -20,7 +20,6 @@ export const App: React.FC = () => {
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
 
   const loadTodos = async (): Promise<void> => {
-    setErrorMessege(null);
     try {
       setLoading(false);
       setTodos(await getTodos());
@@ -63,19 +62,17 @@ export const App: React.FC = () => {
 
     try {
       setLoading(true);
-
       setTempTodo(addTodo);
       const createdTodo = await addTodos(addTodo);
 
       setTodos([...todos, createdTodo]);
       setNewTodo('');
     } catch {
-      setTempTodo(addTodo);
       setLoading(true);
       setErrorMessege('Unable to add a todo');
+      setNewTodo(newTodo);
     } finally {
       setLoading(false);
-      setErrorMessege(null);
       setTempTodo(null);
       setNewTodo('');
     }
@@ -84,7 +81,7 @@ export const App: React.FC = () => {
   async function handleDeleteTodo(id: number) {
     try {
       deleteTodos(id);
-      setLoading(false);
+      setLoading(true);
       setTodos(await getTodos());
     } catch {
       setLoading(true);
