@@ -27,7 +27,6 @@ export const TodoItem: React.FC<Props> = ({ todo, handleDeleteTodo }) => {
 
       {/* Remove button appears only on hover */}
       <button
-        autoFocus
         type="button"
         className="todo__remove"
         data-cy="TodoDelete"
