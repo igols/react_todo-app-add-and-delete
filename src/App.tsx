@@ -57,7 +57,7 @@ export const App: React.FC = () => {
     const addTodo = {
       id: todos.length + 1,
       userId: USER_ID,
-      title: newTodo,
+      title: newTodo.trim(),
       completed: false,
     };
 
@@ -70,6 +70,7 @@ export const App: React.FC = () => {
       setTodos([...todos, createdTodo]);
       setNewTodo('');
     } catch {
+      setTempTodo(addTodo);
       setLoading(true);
       setErrorMessege('Unable to add a todo');
     } finally {

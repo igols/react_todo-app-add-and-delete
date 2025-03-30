@@ -30,6 +30,7 @@ export const Section: React.FC<Props> = ({
           key={tempTodo.id}
           handleDeleteTodo={handleDeleteTodo}
           todo={tempTodo}
+          loading={loading}
         />
       )}
     </section>
