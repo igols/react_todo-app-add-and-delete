@@ -17,6 +17,7 @@ export const App: React.FC = () => {
   const [newTodo, setNewTodo] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [selectedFilter, setselectedFilter] = useState<string>(Filter.All);
+  const [tempTodo, setTempTodo] = useState<Todo | null>(null);
 
   const loadTodos = async (): Promise<void> => {
     setErrorMessege(null);
@@ -34,6 +35,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     loadTodos();
   }, []);
+
   useEffect(() => {
     if (errorMessege === null) {
       return;
@@ -52,9 +54,18 @@ export const App: React.FC = () => {
       return;
     }
 
+    const addTodo = {
+      id: todos.length + 1,
+      userId: USER_ID,
+      title: newTodo,
+      completed: false,
+    };
+
     try {
       setLoading(true);
-      const createdTodo = await addTodos(newTodo);
+
+      setTempTodo(addTodo);
+      const createdTodo = await addTodos(addTodo);
 
       setTodos([...todos, createdTodo]);
       setNewTodo('');
@@ -64,13 +75,14 @@ export const App: React.FC = () => {
     } finally {
       setLoading(false);
       setErrorMessege(null);
+      setTempTodo(null);
     }
   }
 
   async function handleDeleteTodo(id: number) {
     try {
-      setLoading(false);
       deleteTodos(id);
+      setLoading(false);
       setTodos(await getTodos());
     } catch {
       setLoading(true);
@@ -113,7 +125,12 @@ export const App: React.FC = () => {
           handleAddTodo={handleAddTodo}
           loadTodos={loadTodos}
         />
-        <Section todos={filteredTodos()} handleDeleteTodo={handleDeleteTodo} />
+        <Section
+          tempTodo={tempTodo}
+          todos={filteredTodos()}
+          handleDeleteTodo={handleDeleteTodo}
+          loading={loading}
+        />
         {/*+ Hide the footer if there are no todos */}
         {todos.length > 0 && (
           <Footer
