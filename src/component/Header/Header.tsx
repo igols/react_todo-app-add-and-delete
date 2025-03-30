@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Todo } from '../../types/Todo';
 import cn from 'classnames';
 type Props = {
@@ -18,6 +18,12 @@ export const Header: React.FC<Props> = ({
   handleAddTodo,
   loadTodos,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [loading]);
+
   return (
     <header className="todoapp__header">
       {/* + this button should have `active` class only if all todos are completed */}
@@ -31,7 +37,7 @@ export const Header: React.FC<Props> = ({
       {/* +Add a todo on form submit */}
       <form onSubmit={handleAddTodo}>
         <input
-          autoFocus
+          ref={inputRef}
           data-cy="NewTodoField"
           type="text"
           className="todoapp__new-todo"

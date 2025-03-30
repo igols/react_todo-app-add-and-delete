@@ -77,6 +77,7 @@ export const App: React.FC = () => {
       setLoading(false);
       setErrorMessege(null);
       setTempTodo(null);
+      setNewTodo('');
     }
   }
 
