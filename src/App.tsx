@@ -63,21 +63,19 @@ export const App: React.FC = () => {
       setNewTodo(newTodo);
     } finally {
       setLoading(false);
-      setTempTodo(null);
-      setNewTodo('');
     }
   }
 
   async function handleDeleteTodo(id: number) {
     try {
-      deleteTodos(id);
       setLoading(true);
+      deleteTodos(id);
       setTodos(await getTodos());
     } catch {
       setLoading(true);
       setErrorMessege('Unable to delete a todo');
     } finally {
-      setLoading(false);
+      setLoading(true);
     }
   }
 

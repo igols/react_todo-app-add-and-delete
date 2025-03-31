@@ -4,7 +4,7 @@ import { TodoItem } from '../TodoItem/TodoItem';
 
 type Props = {
   todos: Todo[];
-  handleDeleteTodo?: (id: number) => void;
+  handleDeleteTodo: (id: number) => void;
   tempTodo?: Todo | null;
   loading?: boolean;
 };
@@ -28,7 +28,7 @@ export const Section: React.FC<Props> = ({
       {tempTodo && loading && (
         <TodoItem
           key={tempTodo.id}
-          handleDeleteTodo={handleDeleteTodo}
+          
           todo={tempTodo}
           loading={loading}
         />
