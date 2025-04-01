@@ -54,11 +54,11 @@ export const App: React.FC = () => {
     try {
       const createdTodo = await addTodos(addTodo);
 
-      setLoading(true);
       setTempTodo(addTodo);
 
       setTodos([...todos, createdTodo]);
       setNewTodo('');
+      setLoading(true);
     } catch {
       setLoading(true);
       setErrorMessege('Unable to add a todo');
