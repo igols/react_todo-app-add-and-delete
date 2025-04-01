@@ -4,13 +4,15 @@ import cn from 'classnames';
 
 type Props = {
   todo: Todo;
-  handleDeleteTodo?: (value: number) => void;
+  handleDeleteTodo: (value: number) => void;
+  loadingId: number[];
   loading?: boolean;
 };
 
 export const TodoItem: React.FC<Props> = ({
   todo,
   handleDeleteTodo,
+  loadingId,
   loading,
 }) => {
   return (
@@ -22,8 +24,8 @@ export const TodoItem: React.FC<Props> = ({
           type="checkbox"
           className="todo__status"
           id={`${todo.id}`}
-          disabled={loading}
           checked={todo.completed}
+          disabled={loading}
         />
       </label>
 
@@ -44,7 +46,9 @@ export const TodoItem: React.FC<Props> = ({
       {/* overlay will cover the todo while it is being deleted or updated */}
       <div
         data-cy="TodoLoader"
-        className={cn('modal overlay', { 'is-active': loading })}
+        className={cn('modal overlay', {
+          'is-active': loadingId.includes(todo.id) && loading,
+        })}
       >
         <div className="modal-background has-background-white-ter" />
         <div className="loader" />

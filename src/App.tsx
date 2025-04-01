@@ -18,11 +18,12 @@ export const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [selectedFilter, setselectedFilter] = useState<string>(Filter.All);
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
+  const [loadingId, setloadingId] = useState<number[]>([]);
 
   const loadTodos = async (): Promise<void> => {
     try {
-      setLoading(false);
       setTodos(await getTodos());
+      setLoading(true);
     } catch {
       setLoading(true);
       setErrorMessege('Unable to load todos');
@@ -51,9 +52,10 @@ export const App: React.FC = () => {
     };
 
     try {
+      const createdTodo = await addTodos(addTodo);
+
       setLoading(true);
       setTempTodo(addTodo);
-      const createdTodo = await addTodos(addTodo);
 
       setTodos([...todos, createdTodo]);
       setNewTodo('');
@@ -62,20 +64,22 @@ export const App: React.FC = () => {
       setErrorMessege('Unable to add a todo');
       setNewTodo(newTodo);
     } finally {
+      setTempTodo(null);
+      setloadingId((prev: number[]) => [...prev, addTodo.id]);
       setLoading(false);
     }
   }
 
   async function handleDeleteTodo(id: number) {
     try {
-      setLoading(true);
       deleteTodos(id);
       setTodos(await getTodos());
+      setLoading(true);
     } catch {
       setLoading(true);
       setErrorMessege('Unable to delete a todo');
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   }
 
@@ -112,20 +116,23 @@ export const App: React.FC = () => {
           handleAddTodo={handleAddTodo}
           loadTodos={loadTodos}
         />
-        <Section
-          tempTodo={tempTodo}
-          todos={filteredTodos()}
-          handleDeleteTodo={handleDeleteTodo}
-          loading={loading}
-        />
-        {/*+ Hide the footer if there are no todos */}
         {todos.length > 0 && (
-          <Footer
-            todos={todos}
-            selectedFilter={selectedFilter}
-            setselectedFilter={setselectedFilter}
-            handleClearCompleted={handleClearCompleted}
-          />
+          <>
+            <Section
+              tempTodo={tempTodo}
+              todos={filteredTodos()}
+              handleDeleteTodo={handleDeleteTodo}
+              loadingId={loadingId}
+              loading={loading}
+            />
+
+            <Footer
+              todos={todos}
+              selectedFilter={selectedFilter}
+              setselectedFilter={setselectedFilter}
+              handleClearCompleted={handleClearCompleted}
+            />
+          </>
         )}
       </div>
       {loading && <Loader />}

@@ -33,6 +33,7 @@ export const Header: React.FC<Props> = ({
            ${todos.every(todo => todo.completed) ? 'active' : ''}`)}
         data-cy="ToggleAllButton"
         onClick={() => loadTodos}
+        disabled={loading}
       />
       {/* +Add a todo on form submit */}
       <form onSubmit={handleAddTodo}>
