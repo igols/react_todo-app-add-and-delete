@@ -66,11 +66,12 @@ export const App: React.FC = () => {
   }
 
   async function handleDeleteTodo(id: number) {
-    setLoading(true);
     try {
       await deleteTodos(id);
       loadTodos();
+      setLoading(loadingId.includes(id));
     } catch {
+      setLoading(true);
       setErrorMessege('Unable to delete a todo');
     } finally {
       setLoading(false);
@@ -116,7 +117,6 @@ export const App: React.FC = () => {
               tempTodo={tempTodo}
               todos={filteredTodos()}
               handleDeleteTodo={handleDeleteTodo}
-              loadingId={loadingId}
               loading={loading}
             />
 

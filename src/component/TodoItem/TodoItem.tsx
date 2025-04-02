@@ -5,14 +5,12 @@ import cn from 'classnames';
 type Props = {
   todo: Todo;
   handleDeleteTodo: (value: number) => void;
-  loadingId: number[];
   loading?: boolean;
 };
 
 export const TodoItem: React.FC<Props> = ({
   todo,
   handleDeleteTodo,
-  loadingId,
   loading,
 }) => {
   return (
@@ -47,7 +45,7 @@ export const TodoItem: React.FC<Props> = ({
       <div
         data-cy="TodoLoader"
         className={cn('modal overlay', {
-          'is-active': loading || loadingId.includes(todo.id),
+          'is-active': loading,
         })}
       >
         <div className="modal-background has-background-white-ter" />

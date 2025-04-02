@@ -6,13 +6,11 @@ type Props = {
   todos: Todo[];
   handleDeleteTodo: (id: number) => void;
   tempTodo?: Todo | null;
-  loadingId: number[];
   setLoading?: () => void;
   loading: boolean;
 };
 
 export const Section: React.FC<Props> = ({
-  loadingId,
   tempTodo,
   todos,
   handleDeleteTodo,
@@ -26,7 +24,6 @@ export const Section: React.FC<Props> = ({
           key={todo.id}
           handleDeleteTodo={handleDeleteTodo}
           todo={todo}
-          loadingId={loadingId}
         />
       ))}
       {tempTodo && loading && (
@@ -35,7 +32,6 @@ export const Section: React.FC<Props> = ({
           todo={tempTodo}
           handleDeleteTodo={handleDeleteTodo}
           loading={loading}
-          loadingId={[]}
         />
       )}
     </section>
