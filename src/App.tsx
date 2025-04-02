@@ -21,11 +21,10 @@ export const App: React.FC = () => {
   const [loadingId, setloadingId] = useState<number[]>([]);
 
   const loadTodos = async (): Promise<void> => {
+    setLoading(true);
     try {
       setTodos(await getTodos());
-      setLoading(true);
     } catch {
-      setLoading(true);
       setErrorMessege('Unable to load todos');
     } finally {
       setLoading(false);
@@ -44,6 +43,8 @@ export const App: React.FC = () => {
       return;
     }
 
+    setLoading(true);
+
     const addTodo = {
       id: todos.length + 1,
       userId: USER_ID,
@@ -52,29 +53,24 @@ export const App: React.FC = () => {
     };
 
     try {
-      const createdTodo = await addTodos(addTodo);
-
       setTempTodo(addTodo);
-
-      setTodos([...todos, createdTodo]);
-      setNewTodo('');
-      setLoading(true);
+      setTodos([...todos, await addTodos(addTodo)]);
     } catch {
       setLoading(true);
       setErrorMessege('Unable to add a todo');
-      setNewTodo(newTodo);
     } finally {
       setTempTodo(null);
       setloadingId((prev: number[]) => [...prev, addTodo.id]);
       setLoading(false);
+      setNewTodo('');
     }
   }
 
   async function handleDeleteTodo(id: number) {
+    setLoading(true);
     try {
-      deleteTodos(id);
-      setTodos(await getTodos());
-      setLoading(true);
+      await deleteTodos(id);
+      loadTodos();
     } catch {
       setLoading(true);
       setErrorMessege('Unable to delete a todo');

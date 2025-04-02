@@ -29,7 +29,7 @@ export const Section: React.FC<Props> = ({
           loadingId={loadingId}
         />
       ))}
-      {tempTodo && (
+      {tempTodo && loading && (
         <TodoItem
           key={tempTodo.id}
           todo={tempTodo}
