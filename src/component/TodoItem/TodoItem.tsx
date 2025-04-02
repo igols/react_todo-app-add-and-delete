@@ -11,7 +11,7 @@ type Props = {
 export const TodoItem: React.FC<Props> = ({
   todo,
   handleDeleteTodo,
-  loading,
+  loading = false,
 }) => {
   return (
     <div data-cy="Todo" className={cn('todo', { completed: todo.completed })}>
@@ -37,6 +37,7 @@ export const TodoItem: React.FC<Props> = ({
         className="todo__remove"
         data-cy="TodoDelete"
         onClick={() => handleDeleteTodo(todo.id)}
+        disabled={loading}
       >
         ×
       </button>

@@ -66,14 +66,15 @@ export const App: React.FC = () => {
   }
 
   async function handleDeleteTodo(id: number) {
+    setloadingId(prev => [...prev, id]);
+    setLoading(true);
     try {
       await deleteTodos(id);
-      loadTodos();
-      setLoading(loadingId.includes(id));
+      setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
     } catch {
-      setLoading(true);
       setErrorMessege('Unable to delete a todo');
     } finally {
+      setloadingId(prev => prev.filter(todoId => todoId !== id));
       setLoading(false);
     }
   }
@@ -118,8 +119,9 @@ export const App: React.FC = () => {
               todos={filteredTodos()}
               handleDeleteTodo={handleDeleteTodo}
               loading={loading}
+              loadingId={loadingId}
             />
-
+            {loading && <Loader />}
             <Footer
               todos={todos}
               selectedFilter={selectedFilter}
@@ -129,7 +131,6 @@ export const App: React.FC = () => {
           </>
         )}
       </div>
-      {loading && <Loader />}
 
       <Error
         errorMessege={errorMessege}

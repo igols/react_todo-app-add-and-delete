@@ -8,6 +8,7 @@ type Props = {
   tempTodo?: Todo | null;
   setLoading?: () => void;
   loading: boolean;
+  loadingId?: number[];
 };
 
 export const Section: React.FC<Props> = ({
@@ -15,6 +16,7 @@ export const Section: React.FC<Props> = ({
   todos,
   handleDeleteTodo,
   loading,
+  loadingId = [],
 }) => {
   return (
     <section className="todoapp__main" data-cy="TodoList">
@@ -24,6 +26,7 @@ export const Section: React.FC<Props> = ({
           key={todo.id}
           handleDeleteTodo={handleDeleteTodo}
           todo={todo}
+          loading={loadingId.includes(todo.id)}
         />
       ))}
       {tempTodo && loading && (
