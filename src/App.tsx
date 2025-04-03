@@ -60,7 +60,6 @@ export const App: React.FC = () => {
       setErrorMessege('Unable to add a todo');
     } finally {
       setTempTodo(null);
-      setloadingId((prev: number[]) => [...prev, addTodo.id]);
       setLoading(false);
     }
   }
