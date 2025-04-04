@@ -73,7 +73,6 @@ export const App: React.FC = () => {
     } catch {
       setErrorMessege('Unable to delete a todo');
     } finally {
-      setloadingId(prev => prev.filter(todoId => todoId !== id));
       setLoading(false);
     }
   }
@@ -91,21 +90,12 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleClearCompleted = async (): Promise<void> => {
-    setLoading(true);
-    try {
-      const todosComplited = todos.filter(todo => todo.completed);
-
-      todosComplited.map(todo => {
+  const handleClearCompleted = () => {
+    todos.forEach(todo => {
+      if (todo.completed) {
         handleDeleteTodo(todo.id);
-      });
-
-      setTodos(await getTodos());
-    } catch {
-      setErrorMessege('Unable to delete a todo');
-    } finally {
-      setLoading(false);
-    }
+      }
+    });
   };
 
   if (!USER_ID) {
@@ -134,12 +124,14 @@ export const App: React.FC = () => {
               loadingId={loadingId}
             />
             {loading && <Loader />}
-            <Footer
-              todos={todos}
-              selectedFilter={selectedFilter}
-              setselectedFilter={setselectedFilter}
-              handleClearCompleted={handleClearCompleted}
-            />
+            {todos.length > 0 && (
+              <Footer
+                todos={todos}
+                selectedFilter={selectedFilter}
+                setselectedFilter={setselectedFilter}
+                handleClearCompleted={handleClearCompleted}
+              />
+            )}
           </>
         )}
       </div>
