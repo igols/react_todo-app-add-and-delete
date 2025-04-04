@@ -91,8 +91,21 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleClearCompleted = () => {
-    setTodos(todos.filter(todo => !todo.completed));
+  const handleClearCompleted = async (): Promise<void> => {
+    setLoading(true);
+    try {
+      const todosComplited = todos.filter(todo => todo.completed);
+
+      await todosComplited.map(todo => {
+        handleDeleteTodo(todo.id);
+      });
+
+      setTodos(await getTodos());
+    } catch {
+      setErrorMessege('Unable to delete a todo');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!USER_ID) {
