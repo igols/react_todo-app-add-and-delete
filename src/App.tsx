@@ -96,7 +96,7 @@ export const App: React.FC = () => {
     try {
       const todosComplited = todos.filter(todo => todo.completed);
 
-      await todosComplited.map(todo => {
+      todosComplited.map(todo => {
         handleDeleteTodo(todo.id);
       });
 
