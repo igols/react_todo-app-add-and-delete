@@ -8,7 +8,6 @@ import { Section } from './component/Section/Section';
 import { Footer } from './component/Footer/Footer';
 import { Todo } from './types/Todo';
 import { Error } from './component/Error';
-import { Loader } from './component/Loader';
 import { Filter } from './types/Filter';
 
 export const App: React.FC = () => {
@@ -123,7 +122,6 @@ export const App: React.FC = () => {
               loading={loading}
               loadingId={loadingId}
             />
-            {loading && <Loader />}
             {todos.length > 0 && (
               <Footer
                 todos={todos}
