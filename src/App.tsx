@@ -34,7 +34,7 @@ export const App: React.FC = () => {
     loadTodos();
   }, []);
 
-  async function handleAddTodo(event: React.FormEvent) {
+  const handleAddTodo = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!newTodo.trim()) {
       setErrorMessege('Title should not be empty');
@@ -61,9 +61,9 @@ export const App: React.FC = () => {
       setTempTodo(null);
       setLoading(false);
     }
-  }
+  };
 
-  async function handleDeleteTodo(id: number) {
+  const handleDeleteTodo = async (id: number) => {
     setloadingId(prev => [...prev, id]);
     setLoading(true);
     try {
@@ -74,7 +74,7 @@ export const App: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const filteredTodos = () => {
     switch (selectedFilter) {
