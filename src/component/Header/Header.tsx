@@ -29,8 +29,9 @@ export const Header: React.FC<Props> = ({
       {/* + this button should have `active` class only if all todos are completed */}
       <button
         type="button"
-        className={cn(`todoapp__toggle-all
-           ${todos.length > 0 && todos.every(todo => todo.completed) ? 'active' : ''}`)}
+        className={cn('todoapp__toggle-all', {
+          active: todos.length > 0 && todos.every(todo => todo.completed),
+        })}
         data-cy="ToggleAllButton"
         onClick={() => loadTodos}
       />
