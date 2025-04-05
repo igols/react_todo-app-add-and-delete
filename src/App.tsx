@@ -82,8 +82,6 @@ export const App: React.FC = () => {
         return todos.filter(todo => !todo.completed);
       case Filter.Completed:
         return todos.filter(todo => todo.completed);
-      case Filter.All:
-        return todos;
       default:
         return todos;
     }
@@ -134,11 +132,7 @@ export const App: React.FC = () => {
         )}
       </div>
 
-      <Error
-        errorMessege={errorMessege}
-        setError={setErrorMessege}
-        todos={todos}
-      />
+      <Error errorMessege={errorMessege} setError={setErrorMessege} />
     </div>
   );
 };

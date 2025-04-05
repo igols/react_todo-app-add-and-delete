@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import cn from 'classnames';
-import { Todo } from '../../types/Todo';
+
 type Props = {
-  todos: Todo[];
   errorMessege: string | null;
   setError: (value: string | null) => void;
 };
 
-export const Error: React.FC<Props> = ({ errorMessege, setError, todos }) => {
+export const Error: React.FC<Props> = ({ errorMessege, setError }) => {
   useEffect(() => {
     if (errorMessege === null) {
       return;
@@ -26,9 +25,7 @@ export const Error: React.FC<Props> = ({ errorMessege, setError, todos }) => {
         'is-danger is-light',
         'has-text-weight-normal',
         {
-          hidden:
-            (errorMessege === null && todos.length === 0) ||
-            errorMessege === null,
+          hidden: errorMessege === null,
         },
       )}
     >

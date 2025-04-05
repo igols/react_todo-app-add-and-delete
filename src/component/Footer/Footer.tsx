@@ -30,8 +30,9 @@ export const Footer: React.FC<Props> = ({
             <a
               key={item}
               href="#/All"
-              className={cn(`filter__link
-                 ${selectedFilter === item ? 'selected' : ''}`)}
+              className={cn('filter__link', {
+                selected: selectedFilter === item,
+              })}
               data-cy={`FilterLink${item}`}
               onClick={() => setselectedFilter(item)}
             >
